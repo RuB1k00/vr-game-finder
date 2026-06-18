@@ -26,6 +26,8 @@
     .modal-back{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;align-items:center;justify-content:center;padding:18px}.modal-back.show{display:flex}.modal{max-width:860px;width:100%;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px}.modal-top{display:flex;justify-content:space-between;gap:14px;align-items:start}.close{border:0;background:transparent;color:var(--muted);font-size:28px}.modal h2{margin:0 0 8px;font-size:26px}.modal-cover{min-height:280px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#3b2c72,#123758);display:grid;place-items:center;overflow:hidden;margin:16px 0 6px;padding:12px}.modal-cover.has-cover{min-height:0}.modal-cover img{display:block;width:auto;max-width:100%;height:auto;max-height:76vh;object-fit:contain;margin:auto;background:rgba(0,0,0,.16);border-radius:12px}.modal-cover .letters{min-height:280px;width:100%;display:grid;place-items:center;font-size:64px;font-weight:950;color:rgba(255,255,255,.82);letter-spacing:-.06em}.poster.has-cover .letters,.modal-cover.has-cover .letters{display:none}.poster:not(.has-cover) img,.modal-cover:not(.has-cover) img{display:none}.modal-section{margin-top:16px}.modal-section h3{margin:0 0 8px;color:#9b8cff;font-size:13px;text-transform:uppercase;letter-spacing:.08em}.details{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted);line-height:1.55}.props{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.prop{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}.prop span{display:block;color:var(--muted2);font-size:12px;margin-bottom:3px}.prop b{font-size:14px}
     .quiz-card,.admin-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.quiz-card{max-width:760px;margin:0 auto}.quiz-progress{height:7px;background:var(--bg2);border-radius:999px;overflow:hidden;margin-bottom:18px}.quiz-bar{height:100%;background:linear-gradient(90deg,var(--accent),#31d4ff);width:0;transition:.25s}.options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.option{border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:15px;padding:14px;font-weight:900}.option:hover{border-color:var(--accent)}
     .admin-layout{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{display:block;color:var(--muted);font-size:13px;font-weight:900;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:12px;padding:10px;outline:none}.field textarea{min-height:82px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}.admin-list{max-height:620px;overflow:auto;display:flex;flex-direction:column;gap:8px}.admin-item{display:flex;justify-content:space-between;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:10px}.admin-item b{font-size:14px}.admin-item span{display:block;color:var(--muted);font-size:12px}.admin-status{min-height:22px;color:var(--muted);font-size:13px}.login-box{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}.login-box h2{margin:0 0 12px}.hidden{display:none!important}
+
+    .quiz-help{margin:6px 0 16px;color:var(--muted);line-height:1.45}.option.skip{border-style:dashed;color:var(--muted);background:transparent}.option.back{background:rgba(255,255,255,.04)}.quiz-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.quiz-result-list{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}.quiz-result-card{display:grid;grid-template-columns:170px minmax(0,1fr);gap:14px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px;align-items:center}.quiz-result-card .poster{min-height:108px}.quiz-result-card .poster .letters{min-height:108px}.quiz-result-meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.match-pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;background:rgba(54,211,153,.16);color:var(--ok);border:1px solid rgba(54,211,153,.35)}.reason-list{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.45}.quiz-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media (max-width:760px){.quiz-result-card{grid-template-columns:1fr}.quiz-result-card .poster{min-height:150px}.quiz-result-card .poster .letters{min-height:150px}}
     @media (max-width:1180px){.grid{grid-template-columns:repeat(3,1fr)}.toolbar-grid{grid-template-columns:1fr 1fr 1fr}.toolbar-grid .control:first-child{grid-column:1/-1}.stats{grid-template-columns:repeat(2,1fr)}.admin-layout{grid-template-columns:1fr}}
     @media (max-width:760px){.top{transition:transform .22s ease,opacity .22s ease}.top.is-hidden{transform:translateY(-105%);opacity:.08;pointer-events:none}.top-inner{align-items:flex-start;gap:10px;padding:10px 0 8px}.brand{gap:10px}.logo{width:38px;height:38px;border-radius:13px;font-size:19px}.lead{display:none}.top-actions{width:100%;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.top-actions .btn{flex:0 0 auto;padding:8px 10px;font-size:13px}.tabs{padding:6px 0 9px}.tab{padding:8px 12px;font-size:13px}.grid{grid-template-columns:1fr}.toolbar-grid,.filter-row,.options,.form-grid,.props{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.filter-pop{position:static;margin-top:8px}.card-actions{grid-template-columns:1fr}.heart{width:38px}.wrap{padding:0 14px}h1{font-size:22px}.poster{min-height:150px}.poster .letters{min-height:150px}.modal{padding:16px}.modal-cover{min-height:190px;padding:10px}.modal-cover img{max-height:70vh}.modal-cover .letters{min-height:190px;font-size:52px}}
   </style>
@@ -376,44 +378,184 @@ function renderCompare(){
   $('clearCompareBtn').addEventListener('click', () => { state.compare.clear(); saveLocalSets(); applyFilters(); });
 }
 
+
 const quizQuestions = [
-  {title:'Какой темп нужен?', key:'pace', opts:[['short','Короткая сессия'],['active','Активно и энергично'],['long','Долгое погружение'],['calm','Спокойно']]},
-  {title:'Какой жанр ближе?', key:'genre', opts:[['shooter','Шутер/экшен'],['puzzle','Головоломки'],['sport','Спорт/фитнес'],['story','Сюжет/приключение']]},
-  {title:'Уровень опыта?', key:'skill', opts:[['new','Новичок'],['any','Средний'],['hard','Опытный'],['safe','Без укачивания']]},
-  {title:'Настроение?', key:'mood', opts:[['fun','Весело'],['scary','Страшно'],['social','С друзьями'],['creative','Творчество']]} 
+  {
+    title:'Какой у тебя опыт в VR?', key:'skill', weight:4,
+    hint:'Это влияет на сложность, комфорт и риск перегруза в первых рекомендациях.',
+    opts:[['new','Я новичок'],['casual','Играл немного'],['hard','Нужен сложный опыт'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Какую нагрузку хочется?', key:'energy', weight:3,
+    hint:'Можно выбрать спокойный просмотр/головоломки или активные игры с движением.',
+    opts:[['calm','Спокойно'],['active','Активно'],['intense','Максимум движения'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Что больше хочется делать?', key:'activity', weight:4,
+    hint:'Главный жанровый ориентир. Если нет предпочтения, пропусти вопрос.',
+    opts:[['action','Стрелять / драться'],['puzzle','Решать загадки'],['sport','Спорт / фитнес'],['creative','Создавать / строить'],['story','Проходить сюжет'],['learn','Учиться / смотреть'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Сколько времени на одну сессию?', key:'session', weight:2,
+    hint:'Короткие игры лучше для демонстрации и перерывов, длинные — для полного погружения.',
+    opts:[['short','До 25 минут'],['medium','25–60 минут'],['long','Больше часа'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Насколько важен комфорт?', key:'comfort', weight:3,
+    hint:'Если легко укачивает, лучше выбирать игры с небольшим перемещением и спокойным темпом.',
+    opts:[['safe','Минимум укачивания'],['normal','Обычный комфорт'],['motion','Перемещение не пугает'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Хочешь играть один или с людьми?', key:'social', weight:2,
+    hint:'Учитывается кооператив, мультиплеер, социальные миры и одиночные кампании.',
+    opts:[['solo','Лучше одному'],['coop','Кооп / с друзьями'],['multi','Онлайн / социально'],['any','Неважно / пропустить']]
+  },
+  {
+    title:'Какое настроение нужно?', key:'mood', weight:3,
+    hint:'Финальная настройка под атмосферу: весело, страшно, красиво, расслабленно или соревновательно.',
+    opts:[['fun','Весело'],['scary','Страшно'],['relax','Расслабиться'],['competitive','Соревноваться'],['wow','Вау-эффект'],['any','Неважно / пропустить']]
+  }
 ];
 let quizStep = 0, quizAnswers = {};
+
+function answerText(question, value){
+  const found = question.opts.find(([v]) => v === value);
+  return found ? found[1] : 'Неважно';
+}
+function gameText(game){
+  return `${game.g || ''} ${(game.t || []).join(' ')} ${game.desc || ''} ${game.det || ''}`.toLowerCase();
+}
+function hasAny(text, words){
+  return words.some(word => text.includes(word));
+}
+function addScore(result, points, reason){
+  if(points <= 0) return;
+  result.score += points;
+  if(reason && result.reasons.length < 4) result.reasons.push(reason);
+}
+function sessionBand(game){
+  const avg = avgSession(game.s);
+  if(avg <= 25) return 'short';
+  if(avg <= 60) return 'medium';
+  return 'long';
+}
+function scoreGameForQuiz(game){
+  const text = gameText(game);
+  const result = { game, score: 0, max: 0, reasons: [] };
+
+  for(const q of quizQuestions){
+    const value = quizAnswers[q.key];
+    if(!value || value === 'any') continue;
+    result.max += q.weight;
+
+    if(q.key === 'skill'){
+      if(value === 'new'){
+        if(game.b) addScore(result, 4, 'подходит новичкам');
+        if(game.d === 1) addScore(result, 1, 'низкий порог входа');
+        if(game.d === 3) result.score -= 2;
+      }
+      if(value === 'casual'){
+        if(game.d <= 2) addScore(result, 3, 'не требует большого опыта');
+        if(game.b) addScore(result, 1, 'понятный старт');
+      }
+      if(value === 'hard'){
+        if(game.d === 3) addScore(result, 4, 'высокая сложность');
+        if(hasAny(text, ['хардкор','для опытных','тактика','соревнование','выживание'])) addScore(result, 1, 'есть глубина и вызов');
+      }
+    }
+
+    if(q.key === 'energy'){
+      if(value === 'calm'){
+        if(hasAny(text, ['спокойная','расслабление','головоломка','пазлы','рыбалка','гольф','творчество','образование','медиа'])) addScore(result, 3, 'спокойный темп');
+        if(hasAny(text, ['активная','фитнес','интенсивная'])) result.score -= 1;
+      }
+      if(value === 'active'){
+        if(hasAny(text, ['активная','ритм','шутер','спорт','комбат','фитнес','ближний бой','экшен'])) addScore(result, 3, 'активный геймплей');
+      }
+      if(value === 'intense'){
+        if(hasAny(text, ['фитнес','активная','паркур','ближний бой','шутер','спорт','реакция','координация'])) addScore(result, 3, 'много движения');
+        if(game.d >= 2) addScore(result, 1, 'не слишком простой опыт');
+      }
+    }
+
+    if(q.key === 'activity'){
+      if(value === 'action' && hasAny(text, ['шутер','экшен','комбат','ближний бой','оружие','зомби','мечи','арена'])) addScore(result, 4, 'совпадает с экшеном');
+      if(value === 'puzzle' && hasAny(text, ['головоломка','пазлы','логика','квест','эскейп','механизмы','загадки'])) addScore(result, 4, 'много задач и загадок');
+      if(value === 'sport' && hasAny(text, ['спорт','фитнес','теннис','гольф','рыбалка','бильярд','тренировка','баланс'])) addScore(result, 4, 'совпадает со спортом/фитнесом');
+      if(value === 'creative' && hasAny(text, ['творчество','креатив','строительство','песочница','рисование','создавать','миры'])) addScore(result, 4, 'есть творчество и свобода');
+      if(value === 'story' && hasAny(text, ['сюжет','приключение','rpg','кампания','история','исследование','атмосфера','выживание'])) addScore(result, 4, 'есть прохождение и атмосфера');
+      if(value === 'learn' && hasAny(text, ['образование','обучение','медицина','анатомия','наука','космос','просмотр','xr','демо'])) addScore(result, 4, 'подходит для обучения или демонстрации');
+    }
+
+    if(q.key === 'session'){
+      const band = sessionBand(game);
+      if(value === band) addScore(result, 2, 'подходит по длительности');
+      if(value === 'short' && avgSession(game.s) <= 35) addScore(result, 1, 'удобно на короткий запуск');
+      if(value === 'long' && avgSession(game.s) >= 45) addScore(result, 1, 'есть потенциал для долгого погружения');
+    }
+
+    if(q.key === 'comfort'){
+      if(value === 'safe'){
+        if(game.b && game.d <= 2) addScore(result, 2, 'комфортнее для большинства');
+        if(hasAny(text, ['без перемещения','спокойная','головоломка','пазлы','рыбалка','гольф','рисование','демо','обучение','новичкам'])) addScore(result, 2, 'меньше резкого движения');
+        if(hasAny(text, ['паркур','хардкор','для опытных','интенсивная'])) result.score -= 2;
+      }
+      if(value === 'normal'){
+        if(game.d <= 2) addScore(result, 2, 'умеренная сложность');
+        if(game.b) addScore(result, 1, 'достаточно дружелюбно');
+      }
+      if(value === 'motion'){
+        if(hasAny(text, ['паркур','лазание','выживание','шутер','экшен','rpg','приключение','платформер'])) addScore(result, 3, 'можно свободно двигаться');
+      }
+    }
+
+    if(q.key === 'social'){
+      if(value === 'solo'){
+        if(!hasAny(text, ['мультиплеер','кооп','социалка','социальная','онлайн'])) addScore(result, 2, 'хорошо работает в одиночку');
+        if(hasAny(text, ['сюжет','головоломка','кампания','исследование'])) addScore(result, 1, 'есть одиночное прохождение');
+      }
+      if(value === 'coop' && hasAny(text, ['кооп','командная','с друзьями','вечеринка'])) addScore(result, 3, 'подходит для игры с друзьями');
+      if(value === 'multi' && hasAny(text, ['мультиплеер','социалка','социальная','онлайн','соревнование','аватары','миры'])) addScore(result, 3, 'есть социальный или онлайн-фокус');
+    }
+
+    if(q.key === 'mood'){
+      if(value === 'fun' && hasAny(text, ['юмор','аркада','семья','вечеринка','хаос','забавн'])) addScore(result, 3, 'лёгкое и весёлое настроение');
+      if(value === 'scary' && hasAny(text, ['хоррор','страш','зомби','мистика','напряжение','скримеры'])) addScore(result, 3, 'подходит для хоррора');
+      if(value === 'relax' && hasAny(text, ['расслабление','спокойная','рыбалка','гольф','творчество','рисование','просмотр'])) addScore(result, 3, 'можно расслабиться');
+      if(value === 'competitive' && hasAny(text, ['соревнование','мультиплеер','тактика','рейтинг','теннис','шутер','спорт'])) addScore(result, 3, 'есть соревновательный интерес');
+      if(value === 'wow' && hasAny(text, ['графика','космос','фэнтези','магия','боссы','mixed reality','демо','вау','атмосфера'])) addScore(result, 3, 'сильный эффект присутствия');
+    }
+  }
+
+  const answered = Object.values(quizAnswers).filter(v => v && v !== 'any').length;
+  if(answered === 0) result.max = 1;
+  if(game.b) result.score += 0.2;
+  result.score = Math.max(0, result.score);
+  result.percent = Math.min(99, Math.round((result.score / Math.max(result.max, 1)) * 100));
+  return result;
+}
+
 function renderQuiz(){
   const panel = $('quizPanel');
   if(quizStep >= quizQuestions.length){ renderQuizResults(); return; }
   const q = quizQuestions[quizStep];
-  panel.innerHTML = `<div class="quiz-card"><div class="quiz-progress"><div class="quiz-bar" style="width:${(quizStep/quizQuestions.length)*100}%"></div></div><h2>${esc(q.title)}</h2><p class="muted">Ответ ${quizStep+1} из ${quizQuestions.length}</p><div class="options">${q.opts.map(([v,t])=>`<button class="option" data-qv="${esc(v)}">${esc(t)}</button>`).join('')}</div></div>`;
+  const answered = Object.entries(quizAnswers).filter(([,v]) => v && v !== 'any').length;
+  panel.innerHTML = `<div class="quiz-card"><div class="quiz-progress"><div class="quiz-bar" style="width:${(quizStep/quizQuestions.length)*100}%"></div></div><h2>${esc(q.title)}</h2><p class="quiz-help">${esc(q.hint)}</p><p class="muted">Вопрос ${quizStep+1} из ${quizQuestions.length} • учтено ответов: ${answered}</p><div class="options">${q.opts.map(([v,t])=>`<button class="option ${v === 'any' ? 'skip' : ''}" data-qv="${esc(v)}">${esc(t)}</button>`).join('')}</div><div class="quiz-nav">${quizStep > 0 ? '<button class="btn" id="quizBack">Назад</button>' : ''}<button class="btn" id="quizReset">Начать заново</button></div></div>`;
   panel.querySelectorAll('[data-qv]').forEach(btn => btn.addEventListener('click', () => { quizAnswers[q.key] = btn.dataset.qv; quizStep++; renderQuiz(); }));
+  const back = $('quizBack');
+  if(back) back.addEventListener('click', () => { quizStep = Math.max(0, quizStep - 1); renderQuiz(); });
+  $('quizReset').addEventListener('click', () => { quizStep = 0; quizAnswers = {}; renderQuiz(); });
 }
 function renderQuizResults(){
-  const scored = state.games.map(game => {
-    let score = 0;
-    const tags = (game.t || []).join(' ').toLowerCase();
-    const genre = String(game.g || '').toLowerCase();
-    if(quizAnswers.pace === 'short' && avgSession(game.s) <= 35) score += 2;
-    if(quizAnswers.pace === 'long' && avgSession(game.s) >= 45) score += 2;
-    if(quizAnswers.pace === 'active' && /(фитнес|ритм|шутер|комбат|спорт|экшен)/.test(tags + genre)) score += 2;
-    if(quizAnswers.pace === 'calm' && /(расслабление|гольф|рыбалка|творчество|пазлы)/.test(tags + genre)) score += 2;
-    if(quizAnswers.genre === 'shooter' && /(шутер|экшен|комбат|зомби)/.test(tags + genre)) score += 3;
-    if(quizAnswers.genre === 'puzzle' && /(головоломка|пазлы|логика|эскейп)/.test(tags + genre)) score += 3;
-    if(quizAnswers.genre === 'sport' && /(спорт|фитнес|теннис|гольф|рыбалка)/.test(tags + genre)) score += 3;
-    if(quizAnswers.genre === 'story' && /(сюжет|приключение|rpg|история|выживание)/.test(tags + genre)) score += 3;
-    if(quizAnswers.skill === 'new' && game.b) score += 3;
-    if(quizAnswers.skill === 'hard' && game.d >= 3) score += 3;
-    if(quizAnswers.skill === 'safe' && game.d <= 2 && game.b) score += 2;
-    if(quizAnswers.mood === 'fun' && /(юмор|аркада|вечеринка|семья)/.test(tags + genre)) score += 2;
-    if(quizAnswers.mood === 'scary' && /(хоррор|страх|зомби)/.test(tags + genre)) score += 2;
-    if(quizAnswers.mood === 'social' && /(мультиплеер|кооп|социалка|вечеринка)/.test(tags + genre)) score += 2;
-    if(quizAnswers.mood === 'creative' && /(творчество|песочница|рисование|строительство)/.test(tags + genre)) score += 2;
-    return { game, score };
-  }).sort((a,b)=>b.score-a.score).slice(0,6);
-  $('quizPanel').innerHTML = `<div class="quiz-card"><h2>Лучшие варианты</h2><p class="muted">Подбор основан на жанрах, тегах, сложности и длительности.</p><div class="grid" style="grid-template-columns:1fr">${scored.map(({game,score}) => `<div class="admin-item"><div><b>${esc(game.n)}</b><span>${esc(game.g)} • ${difficultyLabel(game.d)} • совпадение: ${score}</span></div><button class="btn small" data-open="${game.id}">Подробнее</button></div>`).join('')}</div><div style="margin-top:16px"><button class="btn" id="restartQuiz">Пройти заново</button></div></div>`;
+  const answered = Object.entries(quizAnswers).filter(([,v]) => v && v !== 'any');
+  const scored = state.games.map(scoreGameForQuiz).sort((a,b)=> b.score - a.score || a.game.d - b.game.d || a.game.n.localeCompare(b.game.n, 'ru')).slice(0,8);
+  const answersSummary = answered.length ? answered.map(([key,value]) => {
+    const q = quizQuestions.find(item => item.key === key);
+    return `<span class="pill">${esc(q.title.replace('?', ''))}: ${esc(answerText(q, value))}</span>`;
+  }).join('') : '<span class="pill">Все вопросы пропущены: показаны универсальные варианты</span>';
+  $('quizPanel').innerHTML = `<div class="quiz-card"><h2>Лучшие рекомендации</h2><p class="muted">Подбор учитывает жанры, теги, сложность, длительность, комфорт и социальность. Вопросы с ответом «неважно» не влияют на расчёт.</p><div class="tagrow" style="margin:12px 0 4px">${answersSummary}</div><div class="quiz-result-list">${scored.map(({game,percent,reasons}) => `<article class="quiz-result-card">${coverImageMarkup(game, 'poster', true)}<div><h3 style="margin:0 0 4px">${esc(game.n)}</h3><div class="quiz-result-meta"><span class="match-pill">${percent}% совпадения</span><span class="pill">${esc(game.g)}</span><span class="pill">${difficultyLabel(game.d)}</span><span class="pill">${esc(game.s)} мин</span></div><p class="muted" style="margin:0">${esc(game.desc)}</p>${reasons.length ? `<ul class="reason-list">${reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>` : ''}<div class="quiz-result-actions"><button class="btn small" data-open="${game.id}">Подробнее</button><button class="btn small" data-compare="${game.id}">Сравнить</button><button class="btn small" data-fav="${game.id}">${state.favorites.has(game.id) ? 'Убрать из избранного' : 'В избранное'}</button></div></div></article>`).join('')}</div><div class="quiz-nav"><button class="btn primary" id="restartQuiz">Пройти заново</button><button class="btn" id="quizToCatalog">Вернуться в каталог</button></div></div>`;
   $('restartQuiz').addEventListener('click', () => { quizStep = 0; quizAnswers = {}; renderQuiz(); });
+  $('quizToCatalog').addEventListener('click', () => setView('cards'));
   bindGameButtons($('quizPanel'));
 }
 
