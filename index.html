@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VR Game Finder</title>
+  <style>
+    :root{
+      --bg:#070b18;--bg2:#0d1428;--bg3:#121b33;--panel:#101a34;--panel2:#14213f;--text:#eef4ff;--muted:#9aa8c0;--muted2:#6f7d97;--line:#263653;
+      --accent:#865dff;--accent2:#2e7bff;--ok:#36d399;--warn:#facc15;--bad:#fb7185;--shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    [data-theme="light"]{--bg:#eef3fb;--bg2:#f7f9fd;--bg3:#edf2fb;--panel:#fff;--panel2:#f4f7fd;--text:#111827;--muted:#4b5563;--muted2:#6b7280;--line:#dbe4f2;--shadow:0 18px 50px rgba(35,51,84,.16)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at top left,rgba(134,93,255,.18),transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    button,input,select,textarea{font:inherit} button{cursor:pointer} a{color:inherit}
+    .wrap{max-width:1420px;margin:0 auto;padding:0 20px}.top{position:sticky;top:0;z-index:50;background:rgba(7,11,24,.84);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}[data-theme="light"] .top{background:rgba(238,243,251,.84)}
+    .top-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 0}.brand{display:flex;align-items:center;gap:14px}.logo{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#31d4ff);font-size:23px;box-shadow:0 8px 30px rgba(134,93,255,.22)}
+    h1{font-size:30px;margin:0 0 4px;font-weight:900;letter-spacing:-.04em}.lead{margin:0;color:var(--muted);font-size:14px}.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:13px;padding:10px 14px;font-weight:800;transition:.18s ease;white-space:nowrap}.btn:hover{border-color:var(--accent);transform:translateY(-1px)}.btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}.btn.danger:hover{border-color:var(--bad);color:var(--bad)}.btn.small{padding:7px 10px;font-size:13px;border-radius:10px}
+    .tabs{display:flex;gap:8px;overflow:auto;padding:10px 0 14px}.tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:10px 16px;font-weight:850;white-space:nowrap}.tab:hover,.tab.active{color:#fff;border-color:var(--accent);background:linear-gradient(135deg,var(--accent),var(--accent2))}[data-theme="light"] .tab:hover,[data-theme="light"] .tab.active{color:#fff}
+    main{padding:24px 0 44px}.toolbar{background:rgba(16,26,52,.78);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:18px}[data-theme="light"] .toolbar{background:rgba(255,255,255,.82)}.toolbar-grid{display:grid;grid-template-columns:minmax(260px,1fr) 210px 190px 190px auto;gap:10px;align-items:start}.control{position:relative}.input,.select{width:100%;height:44px;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:13px;padding:0 13px;outline:none}.input{padding-left:42px}.search-ico{position:absolute;left:14px;top:11px;color:var(--muted)}.input:focus,.select:focus{border-color:var(--accent)}
+    .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.filter-menu{position:relative}.filter-btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:13px;padding:12px 14px;font-weight:900}.filter-btn.active{border-color:var(--accent);background:rgba(134,93,255,.12)}.filter-pop{display:none;position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:60;background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:12px;max-height:330px;overflow:auto}.filter-pop.show{display:block}.filter-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.filter-title{font-weight:900;color:var(--muted);font-size:13px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800}.chip:hover{border-color:var(--accent);color:var(--text)}.chip.on{background:rgba(134,93,255,.22);border-color:var(--accent);color:var(--text)}.count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;background:rgba(134,93,255,.28);border-radius:999px;color:#fff;font-size:12px;padding:0 7px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{display:block;font-size:23px;margin-bottom:4px}.stat span{color:var(--muted);font-size:13px}.result-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:8px 0 14px;font-weight:900}.accent{color:#31d4ff}.muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,.12);transition:.18s ease}.card:hover{transform:translateY(-3px);border-color:var(--accent)}.poster{height:150px;background:linear-gradient(135deg,#3b2c72,#123758);display:grid;place-items:center;position:relative;overflow:hidden}.poster img{width:100%;height:100%;object-fit:cover}.poster .letters{font-size:42px;font-weight:950;color:rgba(255,255,255,.82);letter-spacing:-.06em}.card-body{padding:14px}.card-title{font-weight:950;margin:0 0 9px;font-size:17px;letter-spacing:-.02em}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font-size:12px;font-weight:800;background:rgba(255,255,255,.03)}.desc{color:var(--muted);font-size:13px;line-height:1.45;min-height:58px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-actions{display:grid;grid-template-columns:1fr 1fr 42px;gap:8px;margin-top:12px}.heart{position:absolute;right:12px;bottom:10px;width:40px;height:40px;border-radius:13px;border:1px solid var(--line);background:rgba(7,11,24,.7);color:#fff;font-size:18px}.heart.on{background:rgba(251,113,133,.18);border-color:var(--bad)}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{border-collapse:collapse;width:100%;min-width:980px}th,td{border-bottom:1px solid var(--line);padding:12px;text-align:left;font-size:14px}th{color:var(--muted);background:var(--bg3);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.table-name{font-weight:900}.empty{border:1px dashed var(--line);border-radius:18px;padding:34px;text-align:center;color:var(--muted);background:var(--panel)}
+    .modal-back{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;align-items:center;justify-content:center;padding:18px}.modal-back.show{display:flex}.modal{max-width:780px;width:100%;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px}.modal-top{display:flex;justify-content:space-between;gap:14px;align-items:start}.close{border:0;background:transparent;color:var(--muted);font-size:28px}.modal h2{margin:0 0 8px;font-size:26px}.modal-section{margin-top:16px}.modal-section h3{margin:0 0 8px;color:#9b8cff;font-size:13px;text-transform:uppercase;letter-spacing:.08em}.details{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted);line-height:1.55}.props{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.prop{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}.prop span{display:block;color:var(--muted2);font-size:12px;margin-bottom:3px}.prop b{font-size:14px}
+    .quiz-card,.admin-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.quiz-card{max-width:760px;margin:0 auto}.quiz-progress{height:7px;background:var(--bg2);border-radius:999px;overflow:hidden;margin-bottom:18px}.quiz-bar{height:100%;background:linear-gradient(90deg,var(--accent),#31d4ff);width:0;transition:.25s}.options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.option{border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:15px;padding:14px;font-weight:900}.option:hover{border-color:var(--accent)}
+    .admin-layout{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{display:block;color:var(--muted);font-size:13px;font-weight:900;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:12px;padding:10px;outline:none}.field textarea{min-height:82px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}.admin-list{max-height:620px;overflow:auto;display:flex;flex-direction:column;gap:8px}.admin-item{display:flex;justify-content:space-between;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:10px}.admin-item b{font-size:14px}.admin-item span{display:block;color:var(--muted);font-size:12px}.admin-status{min-height:22px;color:var(--muted);font-size:13px}.login-box{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}.login-box h2{margin:0 0 12px}.hidden{display:none!important}
+    @media (max-width:1180px){.grid{grid-template-columns:repeat(3,1fr)}.toolbar-grid{grid-template-columns:1fr 1fr 1fr}.toolbar-grid .control:first-child{grid-column:1/-1}.stats{grid-template-columns:repeat(2,1fr)}.admin-layout{grid-template-columns:1fr}}
+    @media (max-width:760px){.top-inner{align-items:flex-start;flex-direction:column}.top-actions{width:100%;justify-content:stretch}.top-actions .btn{flex:1}.grid{grid-template-columns:1fr}.toolbar-grid,.filter-row,.options,.form-grid,.props{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.filter-pop{position:static;margin-top:8px}.card-actions{grid-template-columns:1fr}.heart{width:38px}.wrap{padding:0 14px}h1{font-size:26px}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="top-inner">
+        <div class="brand">
+          <div class="logo">🎮</div>
+          <div><h1>VR Game Finder</h1><p class="lead">Каталог, фильтры и быстрый подбор VR-игр под настроение и опыт игрока.</p></div>
+        </div>
+        <div class="top-actions">
+          <button class="btn" id="themeBtn">🌙 Тема</button>
+          <button class="btn" id="randomBtn">🎲 Случайная</button>
+          <button class="btn primary" id="quizTopBtn">🧙 Подобрать игру</button>
+          <button class="btn" id="adminTopBtn">🔐 Админ</button>
+        </div>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-view="cards">🃏 Карточки</button>
+        <button class="tab" data-view="table">📋 Таблица</button>
+        <button class="tab" data-view="favorites">❤️ Избранное</button>
+        <button class="tab" data-view="compare">⚖️ Сравнение</button>
+        <button class="tab" data-view="quiz">🧙 Подбор</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="catalogPanel">
+      <div class="toolbar">
+        <div class="toolbar-grid">
+          <div class="control"><span class="search-ico">🔎</span><input class="input" id="searchInput" placeholder="Поиск: название, жанр, теги, описание..."></div>
+          <select class="select" id="sortSelect"><option value="name">По названию</option><option value="diff">По сложности</option><option value="session">По длительности</option><option value="beginner">Сначала новичкам</option></select>
+          <select class="select" id="diffSelect"><option value="">Любая сложность</option><option value="1">Лёгкая</option><option value="2">Средняя</option><option value="3">Сложная</option></select>
+          <select class="select" id="beginnerSelect"><option value="">Любой опыт</option><option value="yes">Подходит новичкам</option><option value="no">Для опытных</option></select>
+          <button class="btn danger" id="resetBtn">✕ Сбросить</button>
+        </div>
+        <div class="filter-row">
+          <div class="filter-menu">
+            <button class="filter-btn" data-filter-toggle="genres"><span>🎭 Жанры <span class="count hidden" id="genreActiveCount">0</span></span><span>▼</span></button>
+            <div class="filter-pop" id="genresPop"><div class="filter-head"><span class="filter-title">Жанры</span><button class="btn small" id="clearGenres">Очистить</button></div><div class="chips" id="genreChips"></div></div>
+          </div>
+          <div class="filter-menu">
+            <button class="filter-btn" data-filter-toggle="tags"><span>🏷️ Теги <span class="count hidden" id="tagActiveCount">0</span></span><span>▼</span></button>
+            <div class="filter-pop" id="tagsPop"><div class="filter-head"><span class="filter-title">Теги</span><button class="btn small" id="clearTags">Очистить</button></div><div class="chips" id="tagChips"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b id="statTotal">0</b><span>игр в каталоге</span></div>
+        <div class="stat"><b id="statBeginner">0</b><span>подходят новичкам</span></div>
+        <div class="stat"><b id="statFav">0</b><span>в избранном</span></div>
+        <div class="stat"><b id="statCompare">0</b><span>в сравнении</span></div>
+      </div>
+
+      <div class="result-head"><div>Найдено: <span class="accent" id="resultCount">0</span> игр</div><div class="muted" id="filterInfo">Фильтры не выбраны</div></div>
+      <div id="cardsView" class="grid"></div>
+      <div id="tableView" class="table-wrap hidden"><table><thead><tr><th>Название</th><th>Жанр</th><th>Сложность</th><th>Опыт</th><th>Сессия</th><th>Теги</th><th>Действия</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+      <div id="emptyView" class="empty hidden">Ничего не найдено. Измени фильтры или сбрось поиск.</div>
+    </section>
+
+    <section id="favoritesPanel" class="hidden"></section>
+    <section id="comparePanel" class="hidden"></section>
+    <section id="quizPanel" class="hidden"></section>
+    <section id="adminPanel" class="hidden"></section>
+  </main>
+
+  <div class="modal-back" id="gameModal"><div class="modal" id="gameModalContent"></div></div>
+  <div class="modal-back" id="loginModal">
+    <div class="login-box">
+      <div class="modal-top"><h2>Вход администратора</h2><button class="close" id="closeLogin">×</button></div>
+      <p class="muted">Редактор каталога доступен только после серверной авторизации.</p>
+      <input class="input" style="padding-left:13px" id="adminPassword" type="password" placeholder="Пароль администратора" autocomplete="current-password">
+      <div style="display:flex;gap:10px;margin-top:12px"><button class="btn primary" id="loginBtn">Войти</button><button class="btn" id="cancelLogin">Отмена</button></div>
+      <div class="admin-status" id="loginStatus"></div>
+    </div>
+  </div>
+
+<script>
+'use strict';
+
+const API = {
+  games: '/.netlify/functions/games',
+  adminSession: '/.netlify/functions/admin-session',
+  adminLogin: '/.netlify/functions/admin-login',
+  adminLogout: '/.netlify/functions/admin-logout',
+  adminGames: '/.netlify/functions/admin-games'
+};
+
+const state = {
+  games: [], filtered: [], view: 'cards',
+  genres: new Set(), tags: new Set(), difficulty: '', beginner: '', sort: 'name', search: '',
+  favorites: new Set(JSON.parse(localStorage.getItem('vrgf_favorites') || '[]')),
+  compare: new Set(JSON.parse(localStorage.getItem('vrgf_compare') || '[]')),
+  theme: localStorage.getItem('vrgf_theme') || 'dark',
+  admin: false, editingId: null, updatedAt: null
+};
+
+const $ = (id) => document.getElementById(id);
+const esc = (value) => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const num = (value) => Number(value) || 0;
+const initials = (name) => String(name || '?').split(/\s|:|-/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+const difficultyLabel = (d) => d == 1 ? 'Лёгкая' : d == 2 ? 'Средняя' : 'Сложная';
+const beginnerLabel = (b) => b ? 'Новичкам' : 'Опытным';
+const avgSession = (s) => {
+  const m = String(s || '').match(/\d+/g);
+  if (!m) return 9999;
+  const nums = m.map(Number);
+  return nums.reduce((a,b)=>a+b,0) / nums.length;
+};
+
+function saveLocalSets(){
+  localStorage.setItem('vrgf_favorites', JSON.stringify([...state.favorites]));
+  localStorage.setItem('vrgf_compare', JSON.stringify([...state.compare]));
+}
+
+async function fetchJson(url, options = {}){
+  const res = await fetch(url, { credentials:'include', ...options, headers:{ 'Content-Type':'application/json', ...(options.headers || {}) } });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Ошибка ${res.status}`);
+  return data;
+}
+
+async function loadGames(){
+  try{
+    const data = await fetchJson(API.games, { method:'GET' });
+    state.games = data.games || [];
+    state.updatedAt = data.updatedAt || null;
+  }catch(err){
+    const fallback = await fetch('/data/default-games.json').then(r => r.json());
+    state.games = fallback;
+    state.updatedAt = null;
+    console.warn('Каталог загружен из fallback:', err.message);
+  }
+  buildFilters();
+  applyFilters();
+  checkAdminSession();
+}
+
+function buildFilters(){
+  const genres = new Map();
+  const tags = new Map();
+  for(const game of state.games){
+    genres.set(game.g, (genres.get(game.g) || 0) + 1);
+    for(const tag of (game.t || [])) tags.set(tag, (tags.get(tag) || 0) + 1);
+  }
+  $('genreChips').innerHTML = [...genres.entries()].sort((a,b)=>a[0].localeCompare(b[0], 'ru')).map(([name,count]) =>
+    `<button class="chip ${state.genres.has(name) ? 'on' : ''}" data-genre="${esc(name)}">${esc(name)} <span>${count}</span></button>`
+  ).join('');
+  $('tagChips').innerHTML = [...tags.entries()].sort((a,b)=>a[0].localeCompare(b[0], 'ru')).map(([name,count]) =>
+    `<button class="chip ${state.tags.has(name) ? 'on' : ''}" data-tag="${esc(name)}">${esc(name)} <span>${count}</span></button>`
+  ).join('');
+  document.querySelectorAll('[data-genre]').forEach(btn => btn.addEventListener('click', () => toggleSet(state.genres, btn.dataset.genre)));
+  document.querySelectorAll('[data-tag]').forEach(btn => btn.addEventListener('click', () => toggleSet(state.tags, btn.dataset.tag)));
+  updateFilterCounts();
+}
+
+function toggleSet(set, value){
+  set.has(value) ? set.delete(value) : set.add(value);
+  buildFilters();
+  applyFilters();
+}
+
+function updateFilterCounts(){
+  const gc = state.genres.size;
+  const tc = state.tags.size;
+  $('genreActiveCount').textContent = gc;
+  $('tagActiveCount').textContent = tc;
+  $('genreActiveCount').classList.toggle('hidden', gc === 0);
+  $('tagActiveCount').classList.toggle('hidden', tc === 0);
+  document.querySelector('[data-filter-toggle="genres"]').classList.toggle('active', gc > 0);
+  document.querySelector('[data-filter-toggle="tags"]').classList.toggle('active', tc > 0);
+}
+
+function applyFilters(){
+  state.search = $('searchInput').value.trim().toLowerCase();
+  state.sort = $('sortSelect').value;
+  state.difficulty = $('diffSelect').value;
+  state.beginner = $('beginnerSelect').value;
+  let list = state.games.filter(game => {
+    const hay = [game.n, game.g, game.desc, game.det, ...(game.t || [])].join(' ').toLowerCase();
+    if (state.search && !hay.includes(state.search)) return false;
+    if (state.difficulty && String(game.d) !== state.difficulty) return false;
+    if (state.beginner === 'yes' && !game.b) return false;
+    if (state.beginner === 'no' && game.b) return false;
+    if (state.genres.size && !state.genres.has(game.g)) return false;
+    if (state.tags.size && !(game.t || []).some(tag => state.tags.has(tag))) return false;
+    return true;
+  });
+  list.sort((a,b) => {
+    if(state.sort === 'diff') return num(a.d) - num(b.d) || a.n.localeCompare(b.n, 'ru');
+    if(state.sort === 'session') return avgSession(a.s) - avgSession(b.s) || a.n.localeCompare(b.n, 'ru');
+    if(state.sort === 'beginner') return Number(b.b) - Number(a.b) || a.n.localeCompare(b.n, 'ru');
+    return a.n.localeCompare(b.n, 'ru');
+  });
+  state.filtered = list;
+  renderCurrentView();
+  updateStats();
+  updateFilterCounts();
+}
+
+function updateStats(){
+  $('statTotal').textContent = state.games.length;
+  $('statBeginner').textContent = state.games.filter(g => g.b).length;
+  $('statFav').textContent = state.favorites.size;
+  $('statCompare').textContent = state.compare.size;
+  $('statCompare').parentElement.querySelector('span').textContent = state.compare.size === 1 ? 'игра в сравнении' : 'в сравнении';
+  $('resultCount').textContent = state.filtered.length;
+  const parts = [];
+  if(state.search) parts.push('поиск');
+  if(state.genres.size) parts.push(`жанры: ${state.genres.size}`);
+  if(state.tags.size) parts.push(`теги: ${state.tags.size}`);
+  if(state.difficulty) parts.push(`сложность: ${difficultyLabel(state.difficulty)}`);
+  if(state.beginner) parts.push(state.beginner === 'yes' ? 'новичкам' : 'опытным');
+  $('filterInfo').textContent = parts.length ? parts.join(' • ') : 'Фильтры не выбраны';
+}
+
+function renderCurrentView(){
+  $('catalogPanel').classList.toggle('hidden', !['cards','table'].includes(state.view));
+  $('favoritesPanel').classList.toggle('hidden', state.view !== 'favorites');
+  $('comparePanel').classList.toggle('hidden', state.view !== 'compare');
+  $('quizPanel').classList.toggle('hidden', state.view !== 'quiz');
+  $('adminPanel').classList.toggle('hidden', state.view !== 'admin');
+  if(state.view === 'cards') renderCards(state.filtered);
+  if(state.view === 'table') renderTable(state.filtered);
+  if(state.view === 'favorites') renderFavorites();
+  if(state.view === 'compare') renderCompare();
+  if(state.view === 'quiz') renderQuiz();
+  if(state.view === 'admin') renderAdminPanel();
+}
+
+function cardHTML(game){
+  const fav = state.favorites.has(game.id);
+  const cmp = state.compare.has(game.id);
+  return `<article class="card">
+    <div class="poster">${game.img ? `<img src="${esc(game.img)}" alt="${esc(game.n)}" loading="lazy" onerror="this.remove()">` : `<span class="letters">${esc(initials(game.n))}</span>`}<button class="heart ${fav ? 'on' : ''}" title="Избранное" data-fav="${game.id}">${fav ? '❤️' : '🤍'}</button></div>
+    <div class="card-body">
+      <h3 class="card-title">${esc(game.n)}</h3>
+      <div class="meta"><span class="pill">${esc(game.g)}</span><span class="pill">${difficultyLabel(game.d)}</span><span class="pill">${beginnerLabel(game.b)}</span><span class="pill">${esc(game.s)} мин</span></div>
+      <p class="desc">${esc(game.desc)}</p>
+      <div class="meta">${(game.t || []).slice(0,5).map(t=>`<span class="pill">#${esc(t)}</span>`).join('')}</div>
+      <div class="card-actions"><button class="btn small primary" data-open="${game.id}">Подробнее</button><button class="btn small" data-compare="${game.id}">${cmp ? 'Убрать' : 'Сравнить'}</button>${game.yt ? `<a class="btn small" href="${esc(game.yt)}" target="_blank" rel="noopener">YouTube</a>` : `<button class="btn small" disabled>Нет</button>`}</div>
+    </div>
+  </article>`;
+}
+
+function bindGameButtons(scope=document){
+  scope.querySelectorAll('[data-open]').forEach(btn => btn.addEventListener('click', () => openGame(Number(btn.dataset.open))));
+  scope.querySelectorAll('[data-fav]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(Number(btn.dataset.fav)); }));
+  scope.querySelectorAll('[data-compare]').forEach(btn => btn.addEventListener('click', () => toggleCompare(Number(btn.dataset.compare))));
+}
+
+function renderCards(list){
+  $('cardsView').classList.remove('hidden');
+  $('tableView').classList.add('hidden');
+  $('cardsView').innerHTML = list.map(cardHTML).join('');
+  $('emptyView').classList.toggle('hidden', list.length !== 0);
+  bindGameButtons($('cardsView'));
+}
+
+function renderTable(list){
+  $('cardsView').classList.add('hidden');
+  $('tableView').classList.remove('hidden');
+  $('tableBody').innerHTML = list.map(game => `<tr><td class="table-name">${esc(game.n)}</td><td>${esc(game.g)}</td><td>${difficultyLabel(game.d)}</td><td>${beginnerLabel(game.b)}</td><td>${esc(game.s)} мин</td><td>${(game.t || []).map(t=>`<span class="pill">#${esc(t)}</span>`).join(' ')}</td><td><button class="btn small" data-open="${game.id}">Подробнее</button> <button class="btn small" data-fav="${game.id}">${state.favorites.has(game.id) ? '❤️' : '🤍'}</button></td></tr>`).join('');
+  $('emptyView').classList.toggle('hidden', list.length !== 0);
+  bindGameButtons($('tableBody'));
+}
+
+function toggleFavorite(id){
+  state.favorites.has(id) ? state.favorites.delete(id) : state.favorites.add(id);
+  saveLocalSets();
+  applyFilters();
+}
+
+function toggleCompare(id){
+  if(state.compare.has(id)) state.compare.delete(id);
+  else {
+    if(state.compare.size >= 4){ alert('Для удобного сравнения можно выбрать максимум 4 игры.'); return; }
+    state.compare.add(id);
+  }
+  saveLocalSets();
+  applyFilters();
+}
+
+function openGame(id){
+  const game = state.games.find(g => Number(g.id) === Number(id));
+  if(!game) return;
+  $('gameModalContent').innerHTML = `<div class="modal-top"><div><h2>${esc(game.n)}</h2><div class="meta"><span class="pill">${esc(game.g)}</span><span class="pill">${difficultyLabel(game.d)}</span><span class="pill">${beginnerLabel(game.b)}</span><span class="pill">${esc(game.s)} мин</span></div></div><button class="close" id="closeGameModal">×</button></div>
+    <div class="modal-section"><h3>Описание</h3><p class="details">${esc(game.desc)}</p></div>
+    <div class="modal-section"><h3>Подробности</h3><div class="details">${esc(game.det || 'Подробности не заполнены.')}</div></div>
+    <div class="modal-section"><h3>Характеристики</h3><div class="props"><div class="prop"><span>Жанр</span><b>${esc(game.g)}</b></div><div class="prop"><span>Сложность</span><b>${difficultyLabel(game.d)}</b></div><div class="prop"><span>Опыт</span><b>${beginnerLabel(game.b)}</b></div><div class="prop"><span>Сессия</span><b>${esc(game.s)} мин</b></div></div></div>
+    <div class="modal-section"><h3>Теги</h3><div class="meta">${(game.t || []).map(t=>`<span class="pill">#${esc(t)}</span>`).join('')}</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="btn" data-fav="${game.id}">${state.favorites.has(game.id) ? 'Убрать из избранного' : 'В избранное'}</button><button class="btn" data-compare="${game.id}">${state.compare.has(game.id) ? 'Убрать из сравнения' : 'Сравнить'}</button>${game.yt ? `<a class="btn primary" href="${esc(game.yt)}" target="_blank" rel="noopener">Открыть YouTube</a>` : ''}</div>`;
+  $('gameModal').classList.add('show');
+  $('closeGameModal').addEventListener('click', closeGameModal);
+  bindGameButtons($('gameModalContent'));
+}
+
+function closeGameModal(){ $('gameModal').classList.remove('show'); }
+
+function renderFavorites(){
+  const list = state.games.filter(game => state.favorites.has(game.id));
+  $('favoritesPanel').innerHTML = `<div class="result-head"><div>Избранное: <span class="accent">${list.length}</span></div></div>${list.length ? `<div class="grid">${list.map(cardHTML).join('')}</div>` : '<div class="empty">Избранных игр пока нет.</div>'}`;
+  bindGameButtons($('favoritesPanel'));
+}
+
+function renderCompare(){
+  const list = state.games.filter(game => state.compare.has(game.id));
+  if(!list.length){ $('comparePanel').innerHTML = '<div class="empty">Добавь игры кнопкой «Сравнить», чтобы увидеть их рядом.</div>'; return; }
+  $('comparePanel').innerHTML = `<div class="result-head"><div>Сравнение: <span class="accent">${list.length}</span></div><button class="btn danger" id="clearCompareBtn">Очистить сравнение</button></div><div class="table-wrap"><table><thead><tr><th>Параметр</th>${list.map(g=>`<th>${esc(g.n)}</th>`).join('')}</tr></thead><tbody>
+    <tr><td>Жанр</td>${list.map(g=>`<td>${esc(g.g)}</td>`).join('')}</tr>
+    <tr><td>Сложность</td>${list.map(g=>`<td>${difficultyLabel(g.d)}</td>`).join('')}</tr>
+    <tr><td>Новичкам</td>${list.map(g=>`<td>${g.b ? 'Да' : 'Нет'}</td>`).join('')}</tr>
+    <tr><td>Сессия</td>${list.map(g=>`<td>${esc(g.s)} мин</td>`).join('')}</tr>
+    <tr><td>Теги</td>${list.map(g=>`<td>${(g.t || []).map(t=>`#${esc(t)}`).join(', ')}</td>`).join('')}</tr>
+    <tr><td>Описание</td>${list.map(g=>`<td>${esc(g.desc)}</td>`).join('')}</tr>
+  </tbody></table></div>`;
+  $('clearCompareBtn').addEventListener('click', () => { state.compare.clear(); saveLocalSets(); applyFilters(); });
+}
+
+const quizQuestions = [
+  {title:'Какой темп нужен?', key:'pace', opts:[['short','Короткая сессия'],['active','Активно и энергично'],['long','Долгое погружение'],['calm','Спокойно']]},
+  {title:'Какой жанр ближе?', key:'genre', opts:[['shooter','Шутер/экшен'],['puzzle','Головоломки'],['sport','Спорт/фитнес'],['story','Сюжет/приключение']]},
+  {title:'Уровень опыта?', key:'skill', opts:[['new','Новичок'],['any','Средний'],['hard','Опытный'],['safe','Без укачивания']]},
+  {title:'Настроение?', key:'mood', opts:[['fun','Весело'],['scary','Страшно'],['social','С друзьями'],['creative','Творчество']]} 
+];
+let quizStep = 0, quizAnswers = {};
+function renderQuiz(){
+  const panel = $('quizPanel');
+  if(quizStep >= quizQuestions.length){ renderQuizResults(); return; }
+  const q = quizQuestions[quizStep];
+  panel.innerHTML = `<div class="quiz-card"><div class="quiz-progress"><div class="quiz-bar" style="width:${(quizStep/quizQuestions.length)*100}%"></div></div><h2>${esc(q.title)}</h2><p class="muted">Ответ ${quizStep+1} из ${quizQuestions.length}</p><div class="options">${q.opts.map(([v,t])=>`<button class="option" data-qv="${esc(v)}">${esc(t)}</button>`).join('')}</div></div>`;
+  panel.querySelectorAll('[data-qv]').forEach(btn => btn.addEventListener('click', () => { quizAnswers[q.key] = btn.dataset.qv; quizStep++; renderQuiz(); }));
+}
+function renderQuizResults(){
+  const scored = state.games.map(game => {
+    let score = 0;
+    const tags = (game.t || []).join(' ').toLowerCase();
+    const genre = String(game.g || '').toLowerCase();
+    if(quizAnswers.pace === 'short' && avgSession(game.s) <= 35) score += 2;
+    if(quizAnswers.pace === 'long' && avgSession(game.s) >= 45) score += 2;
+    if(quizAnswers.pace === 'active' && /(фитнес|ритм|шутер|комбат|спорт|экшен)/.test(tags + genre)) score += 2;
+    if(quizAnswers.pace === 'calm' && /(расслабление|гольф|рыбалка|творчество|пазлы)/.test(tags + genre)) score += 2;
+    if(quizAnswers.genre === 'shooter' && /(шутер|экшен|комбат|зомби)/.test(tags + genre)) score += 3;
+    if(quizAnswers.genre === 'puzzle' && /(головоломка|пазлы|логика|эскейп)/.test(tags + genre)) score += 3;
+    if(quizAnswers.genre === 'sport' && /(спорт|фитнес|теннис|гольф|рыбалка)/.test(tags + genre)) score += 3;
+    if(quizAnswers.genre === 'story' && /(сюжет|приключение|rpg|история|выживание)/.test(tags + genre)) score += 3;
+    if(quizAnswers.skill === 'new' && game.b) score += 3;
+    if(quizAnswers.skill === 'hard' && game.d >= 3) score += 3;
+    if(quizAnswers.skill === 'safe' && game.d <= 2 && game.b) score += 2;
+    if(quizAnswers.mood === 'fun' && /(юмор|аркада|вечеринка|семья)/.test(tags + genre)) score += 2;
+    if(quizAnswers.mood === 'scary' && /(хоррор|страх|зомби)/.test(tags + genre)) score += 2;
+    if(quizAnswers.mood === 'social' && /(мультиплеер|кооп|социалка|вечеринка)/.test(tags + genre)) score += 2;
+    if(quizAnswers.mood === 'creative' && /(творчество|песочница|рисование|строительство)/.test(tags + genre)) score += 2;
+    return { game, score };
+  }).sort((a,b)=>b.score-a.score).slice(0,6);
+  $('quizPanel').innerHTML = `<div class="quiz-card"><h2>Лучшие варианты</h2><p class="muted">Подбор основан на жанрах, тегах, сложности и длительности.</p><div class="grid" style="grid-template-columns:1fr">${scored.map(({game,score}) => `<div class="admin-item"><div><b>${esc(game.n)}</b><span>${esc(game.g)} • ${difficultyLabel(game.d)} • совпадение: ${score}</span></div><button class="btn small" data-open="${game.id}">Подробнее</button></div>`).join('')}</div><div style="margin-top:16px"><button class="btn" id="restartQuiz">Пройти заново</button></div></div>`;
+  $('restartQuiz').addEventListener('click', () => { quizStep = 0; quizAnswers = {}; renderQuiz(); });
+  bindGameButtons($('quizPanel'));
+}
+
+async function checkAdminSession(){
+  try{
+    const data = await fetchJson(API.adminSession, { method:'GET' });
+    state.admin = Boolean(data.authenticated);
+  }catch(_){ state.admin = false; }
+}
+
+async function openAdmin(){
+  await checkAdminSession();
+  if(!state.admin){ $('loginModal').classList.add('show'); $('adminPassword').focus(); return; }
+  setView('admin');
+}
+
+async function login(){
+  const password = $('adminPassword').value;
+  $('loginStatus').textContent = 'Проверка...';
+  try{
+    await fetchJson(API.adminLogin, { method:'POST', body: JSON.stringify({ password }) });
+    $('loginModal').classList.remove('show');
+    $('adminPassword').value = '';
+    $('loginStatus').textContent = '';
+    state.admin = true;
+    await refreshFromServer();
+    setView('admin');
+  }catch(err){ $('loginStatus').textContent = err.message; }
+}
+
+async function logout(){
+  await fetchJson(API.adminLogout, { method:'POST', body: '{}' }).catch(()=>{});
+  state.admin = false;
+  setView('cards');
+}
+
+async function refreshFromServer(){
+  const data = await fetchJson(API.games, { method:'GET' });
+  state.games = data.games || [];
+  state.updatedAt = data.updatedAt || null;
+  buildFilters();
+  applyFilters();
+}
+
+function renderAdminPanel(){
+  if(!state.admin){ openAdmin(); return; }
+  $('adminPanel').innerHTML = `<div class="admin-layout">
+    <div class="admin-card"><div class="result-head"><div><b id="adminFormTitle">Добавить игру</b><div class="muted">Изменения сохраняются на сервере и видны всем пользователям.</div></div><button class="btn" id="logoutBtn">Выйти</button></div>
+      <form id="gameForm" class="form-grid">
+        <div class="field"><label>Название</label><input id="fName" required></div>
+        <div class="field"><label>Жанр</label><input id="fGenre" required placeholder="Например: Шутер"></div>
+        <div class="field"><label>Сложность</label><select id="fDiff"><option value="1">Лёгкая</option><option value="2">Средняя</option><option value="3">Сложная</option></select></div>
+        <div class="field"><label>Подходит новичкам</label><select id="fBeginner"><option value="true">Да</option><option value="false">Нет</option></select></div>
+        <div class="field"><label>Длительность сессии</label><input id="fSession" required placeholder="20-40"></div>
+        <div class="field"><label>URL изображения</label><input id="fImg" placeholder="https://..."></div>
+        <div class="field full"><label>Теги через запятую</label><input id="fTags" required placeholder="шутер, кооп, зомби"></div>
+        <div class="field full"><label>Краткое описание</label><textarea id="fDesc" required></textarea></div>
+        <div class="field full"><label>Подробности</label><textarea id="fDet"></textarea></div>
+        <div class="field full"><label>YouTube-ссылка</label><input id="fYt" placeholder="https://youtube.com/..."></div>
+        <div class="field full" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" type="submit" id="saveGameBtn">Сохранить</button><button class="btn" type="button" id="clearFormBtn">Очистить форму</button><button class="btn" type="button" id="exportJsonBtn">Экспорт JSON</button><button class="btn" type="button" id="exportCsvBtn">Экспорт CSV</button><label class="btn">Импорт JSON<input id="importJsonInput" type="file" accept="application/json" hidden></label><button class="btn danger" type="button" id="resetCatalogBtn">Сброс к исходному</button></div>
+        <div class="field full admin-status" id="adminStatus"></div>
+      </form>
+    </div>
+    <div class="admin-card"><div class="result-head"><div><b>Каталог</b><div class="muted">${state.games.length} игр${state.updatedAt ? ' • обновлено ' + esc(new Date(state.updatedAt).toLocaleString('ru-RU')) : ''}</div></div><button class="btn small" id="reloadAdminBtn">Обновить</button></div><input class="input" style="padding-left:13px;margin-bottom:12px" id="adminSearch" placeholder="Поиск в редакторе"><div class="admin-list" id="adminList"></div></div>
+  </div>`;
+  bindAdminEvents();
+  renderAdminList();
+}
+
+function bindAdminEvents(){
+  $('logoutBtn').addEventListener('click', logout);
+  $('gameForm').addEventListener('submit', submitGame);
+  $('clearFormBtn').addEventListener('click', clearForm);
+  $('reloadAdminBtn').addEventListener('click', async()=>{ await refreshFromServer(); renderAdminPanel(); });
+  $('adminSearch').addEventListener('input', renderAdminList);
+  $('exportJsonBtn').addEventListener('click', exportJson);
+  $('exportCsvBtn').addEventListener('click', exportCsv);
+  $('importJsonInput').addEventListener('change', importJson);
+  $('resetCatalogBtn').addEventListener('click', resetCatalog);
+}
+
+function renderAdminList(){
+  const q = ($('adminSearch')?.value || '').toLowerCase();
+  const list = state.games.filter(g => [g.n,g.g,g.desc,...(g.t||[])].join(' ').toLowerCase().includes(q));
+  $('adminList').innerHTML = list.map(game => `<div class="admin-item"><div><b>${esc(game.n)}</b><span>${esc(game.g)} • ${difficultyLabel(game.d)} • ${esc(game.s)} мин</span></div><div style="display:flex;gap:6px"><button class="btn small" data-edit="${game.id}">Править</button><button class="btn small danger" data-del="${game.id}">Удалить</button></div></div>`).join('');
+  $('adminList').querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => editGame(Number(btn.dataset.edit))));
+  $('adminList').querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => deleteGame(Number(btn.dataset.del))));
+}
+
+function formGame(){
+  return { n:$('fName').value, g:$('fGenre').value, d:Number($('fDiff').value), b:$('fBeginner').value === 'true', s:$('fSession').value, img:$('fImg').value, t:$('fTags').value.split(',').map(t=>t.trim()).filter(Boolean), desc:$('fDesc').value, det:$('fDet').value, yt:$('fYt').value };
+}
+function fillForm(game){
+  $('fName').value = game.n || ''; $('fGenre').value = game.g || ''; $('fDiff').value = String(game.d || 1); $('fBeginner').value = String(Boolean(game.b)); $('fSession').value = game.s || ''; $('fImg').value = game.img || ''; $('fTags').value = (game.t || []).join(', '); $('fDesc').value = game.desc || ''; $('fDet').value = game.det || ''; $('fYt').value = game.yt || '';
+}
+function clearForm(){ state.editingId = null; $('adminFormTitle').textContent = 'Добавить игру'; $('saveGameBtn').textContent = 'Сохранить'; $('gameForm').reset(); $('fDiff').value='1'; $('fBeginner').value='true'; $('adminStatus').textContent=''; }
+function editGame(id){ const game = state.games.find(g => Number(g.id) === id); if(!game) return; state.editingId = id; fillForm(game); $('adminFormTitle').textContent = `Редактировать: ${game.n}`; $('saveGameBtn').textContent = 'Обновить игру'; window.scrollTo({top:0,behavior:'smooth'}); }
+
+async function submitGame(e){
+  e.preventDefault();
+  $('adminStatus').textContent = 'Сохранение...';
+  try{
+    const body = JSON.stringify(formGame());
+    const url = state.editingId ? `${API.adminGames}?id=${encodeURIComponent(state.editingId)}` : API.adminGames;
+    const method = state.editingId ? 'PUT' : 'POST';
+    const data = await fetchJson(url, { method, body });
+    state.games = data.games || [];
+    $('adminStatus').textContent = 'Сохранено.';
+    clearForm(); buildFilters(); applyFilters(); renderAdminPanel();
+  }catch(err){ $('adminStatus').textContent = err.message; }
+}
+
+async function deleteGame(id){
+  const game = state.games.find(g => Number(g.id) === id);
+  if(!game || !confirm(`Удалить игру «${game.n}»?`)) return;
+  try{ const data = await fetchJson(`${API.adminGames}?id=${encodeURIComponent(id)}`, { method:'DELETE', body:'{}' }); state.games = data.games || []; buildFilters(); applyFilters(); renderAdminPanel(); }
+  catch(err){ alert(err.message); }
+}
+
+function downloadFile(filename, content, type){
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+}
+function exportJson(){ downloadFile('vr-games-catalog.json', JSON.stringify(state.games, null, 2), 'application/json'); }
+function exportCsv(){
+  const rows = [['id','name','genre','difficulty','beginner','session','tags','description','details','youtube']].concat(state.games.map(g => [g.id,g.n,g.g,difficultyLabel(g.d),g.b ? 'yes' : 'no',g.s,(g.t||[]).join('|'),g.desc,g.det,g.yt]));
+  const csv = rows.map(row => row.map(v => '"' + String(v ?? '').replaceAll('"','""') + '"').join(',')).join('\n');
+  downloadFile('vr-games-catalog.csv', csv, 'text/csv;charset=utf-8');
+}
+async function importJson(e){
+  const file = e.target.files[0]; if(!file) return;
+  try{
+    const games = JSON.parse(await file.text());
+    if(!Array.isArray(games)) throw new Error('JSON должен быть массивом игр.');
+    if(!confirm(`Заменить серверный каталог? Игр в файле: ${games.length}`)) return;
+    const data = await fetchJson(API.adminGames, { method:'PATCH', body: JSON.stringify({ games }) });
+    state.games = data.games || []; buildFilters(); applyFilters(); renderAdminPanel();
+  }catch(err){ alert(err.message); }
+  e.target.value = '';
+}
+async function resetCatalog(){
+  if(!confirm('Сбросить серверный каталог к исходным 78 играм?')) return;
+  try{ const data = await fetchJson(`${API.adminGames}?action=reset`, { method:'POST', body:'{}' }); state.games = data.games || []; buildFilters(); applyFilters(); renderAdminPanel(); }
+  catch(err){ alert(err.message); }
+}
+
+function setView(view){
+  state.view = view;
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.view === view));
+  renderCurrentView();
+}
+function pickRandom(){ const list = state.filtered.length ? state.filtered : state.games; if(list.length) openGame(list[Math.floor(Math.random()*list.length)].id); }
+function resetFilters(){ $('searchInput').value=''; $('sortSelect').value='name'; $('diffSelect').value=''; $('beginnerSelect').value=''; state.genres.clear(); state.tags.clear(); buildFilters(); applyFilters(); }
+function toggleTheme(){ state.theme = state.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = state.theme; localStorage.setItem('vrgf_theme', state.theme); $('themeBtn').textContent = state.theme === 'dark' ? '🌙 Тема' : '☀️ Тема'; }
+
+function bindBaseEvents(){
+  document.documentElement.dataset.theme = state.theme; $('themeBtn').textContent = state.theme === 'dark' ? '🌙 Тема' : '☀️ Тема';
+  $('themeBtn').addEventListener('click', toggleTheme); $('randomBtn').addEventListener('click', pickRandom); $('quizTopBtn').addEventListener('click', () => setView('quiz')); $('adminTopBtn').addEventListener('click', openAdmin);
+  $('searchInput').addEventListener('input', applyFilters); $('sortSelect').addEventListener('change', applyFilters); $('diffSelect').addEventListener('change', applyFilters); $('beginnerSelect').addEventListener('change', applyFilters); $('resetBtn').addEventListener('click', resetFilters);
+  $('clearGenres').addEventListener('click', () => { state.genres.clear(); buildFilters(); applyFilters(); }); $('clearTags').addEventListener('click', () => { state.tags.clear(); buildFilters(); applyFilters(); });
+  document.querySelectorAll('[data-filter-toggle]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); const id = btn.dataset.filterToggle === 'genres' ? 'genresPop' : 'tagsPop'; const pop = $(id); document.querySelectorAll('.filter-pop').forEach(p => { if(p !== pop) p.classList.remove('show'); }); pop.classList.toggle('show'); }));
+  document.addEventListener('click', (e) => { if(!e.target.closest('.filter-menu')) document.querySelectorAll('.filter-pop').forEach(p => p.classList.remove('show')); });
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => setView(tab.dataset.view)));
+  $('gameModal').addEventListener('click', e => { if(e.target === $('gameModal')) closeGameModal(); });
+  $('loginModal').addEventListener('click', e => { if(e.target === $('loginModal')) $('loginModal').classList.remove('show'); });
+  $('closeLogin').addEventListener('click', () => $('loginModal').classList.remove('show')); $('cancelLogin').addEventListener('click', () => $('loginModal').classList.remove('show')); $('loginBtn').addEventListener('click', login); $('adminPassword').addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
+}
+
+bindBaseEvents();
+loadGames();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "vr-game-finder-netlify-backend",
+  "version": "2.0.0",
+  "private": true,
+  "description": "VR Game Finder with Netlify Functions, protected admin panel and shared catalog storage.",
+  "scripts": {
+    "dev": "netlify dev",
+    "hash-password": "node scripts/hash-password.js",
+    "check:functions": "node --check netlify/functions/games.js && node --check netlify/functions/admin-login.js && node --check netlify/functions/admin-logout.js && node --check netlify/functions/admin-session.js && node --check netlify/functions/admin-games.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^9.1.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^23.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
