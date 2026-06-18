@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VR Game Finder</title>
+  <title>VR Games Helper</title>
   <style>
     :root{
       --bg:#070b18;--bg2:#0d1428;--bg3:#121b33;--panel:#101a34;--panel2:#14213f;--text:#eef4ff;--muted:#9aa8c0;--muted2:#6f7d97;--line:#263653;
@@ -21,7 +21,7 @@
     main{padding:24px 0 44px}.toolbar{background:rgba(16,26,52,.78);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:18px}[data-theme="light"] .toolbar{background:rgba(255,255,255,.82)}.toolbar-grid{display:grid;grid-template-columns:minmax(260px,1fr) 210px 190px 190px auto;gap:10px;align-items:start}.control{position:relative}.input,.select{width:100%;height:44px;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:13px;padding:0 13px;outline:none}.input{padding-left:42px}.search-ico{position:absolute;left:14px;top:11px;color:var(--muted)}.input:focus,.select:focus{border-color:var(--accent)}
     .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.filter-menu{position:relative}.filter-btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:13px;padding:12px 14px;font-weight:900}.filter-btn.active{border-color:var(--accent);background:rgba(134,93,255,.12)}.filter-pop{display:none;position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:60;background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:12px;max-height:330px;overflow:auto}.filter-pop.show{display:block}.filter-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.filter-title{font-weight:900;color:var(--muted);font-size:13px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800}.chip:hover{border-color:var(--accent);color:var(--text)}.chip.on{background:rgba(134,93,255,.22);border-color:var(--accent);color:var(--text)}.count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;background:rgba(134,93,255,.28);border-radius:999px;color:#fff;font-size:12px;padding:0 7px}
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{display:block;font-size:23px;margin-bottom:4px}.stat span{color:var(--muted);font-size:13px}.result-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:8px 0 14px;font-weight:900}.accent{color:#31d4ff}.muted{color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,.12);transition:.18s ease}.card:hover{transform:translateY(-3px);border-color:var(--accent)}.poster{height:150px;background:linear-gradient(135deg,#3b2c72,#123758);display:grid;place-items:center;position:relative;overflow:hidden}.poster img{width:100%;height:100%;object-fit:cover}.poster .letters{font-size:42px;font-weight:950;color:rgba(255,255,255,.82);letter-spacing:-.06em}.card-body{padding:14px}.card-title{font-weight:950;margin:0 0 9px;font-size:17px;letter-spacing:-.02em}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font-size:12px;font-weight:800;background:rgba(255,255,255,.03)}.desc{color:var(--muted);font-size:13px;line-height:1.45;min-height:58px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-actions{display:grid;grid-template-columns:1fr 1fr 42px;gap:8px;margin-top:12px}.heart{position:absolute;right:12px;bottom:10px;width:40px;height:40px;border-radius:13px;border:1px solid var(--line);background:rgba(7,11,24,.7);color:#fff;font-size:18px}.heart.on{background:rgba(251,113,133,.18);border-color:var(--bad)}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,.12);transition:.18s ease;cursor:pointer}.card:hover{transform:translateY(-3px);border-color:var(--accent)}.card:focus-visible{outline:3px solid rgba(134,93,255,.55);outline-offset:3px}.poster{height:150px;background:linear-gradient(135deg,#3b2c72,#123758);display:grid;place-items:center;position:relative;overflow:hidden}.poster img{width:100%;height:100%;object-fit:cover}.poster .letters{font-size:42px;font-weight:950;color:rgba(255,255,255,.82);letter-spacing:-.06em}.card-body{padding:14px}.card-title{font-weight:950;margin:0 0 9px;font-size:17px;letter-spacing:-.02em}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font-size:12px;font-weight:800;background:rgba(255,255,255,.03)}.desc{color:var(--muted);font-size:13px;line-height:1.45;min-height:58px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.card-actions .btn{width:100%;min-width:0;display:flex;align-items:center;justify-content:center;overflow:hidden;text-overflow:ellipsis}.heart{position:absolute;right:12px;bottom:10px;width:40px;height:40px;border-radius:13px;border:1px solid var(--line);background:rgba(7,11,24,.7);color:#fff;font-size:18px}.heart.on{background:rgba(251,113,133,.18);border-color:var(--bad)}
     .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel)}table{border-collapse:collapse;width:100%;min-width:980px}th,td{border-bottom:1px solid var(--line);padding:12px;text-align:left;font-size:14px}th{color:var(--muted);background:var(--bg3);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.table-name{font-weight:900}.empty{border:1px dashed var(--line);border-radius:18px;padding:34px;text-align:center;color:var(--muted);background:var(--panel)}
     .modal-back{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;align-items:center;justify-content:center;padding:18px}.modal-back.show{display:flex}.modal{max-width:780px;width:100%;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px}.modal-top{display:flex;justify-content:space-between;gap:14px;align-items:start}.close{border:0;background:transparent;color:var(--muted);font-size:28px}.modal h2{margin:0 0 8px;font-size:26px}.modal-section{margin-top:16px}.modal-section h3{margin:0 0 8px;color:#9b8cff;font-size:13px;text-transform:uppercase;letter-spacing:.08em}.details{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted);line-height:1.55}.props{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.prop{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}.prop span{display:block;color:var(--muted2);font-size:12px;margin-bottom:3px}.prop b{font-size:14px}
     .quiz-card,.admin-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.quiz-card{max-width:760px;margin:0 auto}.quiz-progress{height:7px;background:var(--bg2);border-radius:999px;overflow:hidden;margin-bottom:18px}.quiz-bar{height:100%;background:linear-gradient(90deg,var(--accent),#31d4ff);width:0;transition:.25s}.options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.option{border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:15px;padding:14px;font-weight:900}.option:hover{border-color:var(--accent)}
@@ -36,7 +36,7 @@
       <div class="top-inner">
         <div class="brand">
           <div class="logo">🎮</div>
-          <div><h1>VR Game Finder</h1><p class="lead">Каталог, фильтры и быстрый подбор VR-игр под настроение и опыт игрока.</p></div>
+          <div><h1>VR Games Helper</h1><p class="lead">Каталог, фильтры и быстрый подбор VR-игр под настроение и опыт игрока.</p></div>
         </div>
         <div class="top-actions">
           <button class="btn" id="themeBtn">🌙 Тема</button>
@@ -263,7 +263,7 @@ function renderCurrentView(){
 function cardHTML(game){
   const fav = state.favorites.has(game.id);
   const cmp = state.compare.has(game.id);
-  return `<article class="card">
+  return `<article class="card" data-card-open="${game.id}" tabindex="0" role="button" aria-label="Открыть описание игры ${esc(game.n)}">
     <div class="poster">${game.img ? `<img src="${esc(game.img)}" alt="${esc(game.n)}" loading="lazy" onerror="this.remove()">` : `<span class="letters">${esc(initials(game.n))}</span>`}<button class="heart ${fav ? 'on' : ''}" title="Избранное" data-fav="${game.id}">${fav ? '❤️' : '🤍'}</button></div>
     <div class="card-body">
       <h3 class="card-title">${esc(game.n)}</h3>
@@ -276,9 +276,22 @@ function cardHTML(game){
 }
 
 function bindGameButtons(scope=document){
-  scope.querySelectorAll('[data-open]').forEach(btn => btn.addEventListener('click', () => openGame(Number(btn.dataset.open))));
+  scope.querySelectorAll('[data-card-open]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('button, a, input, select, textarea')) return;
+      openGame(Number(card.dataset.cardOpen));
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      if (e.target.closest('button, a, input, select, textarea')) return;
+      e.preventDefault();
+      openGame(Number(card.dataset.cardOpen));
+    });
+  });
+  scope.querySelectorAll('[data-open]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); openGame(Number(btn.dataset.open)); }));
   scope.querySelectorAll('[data-fav]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(Number(btn.dataset.fav)); }));
-  scope.querySelectorAll('[data-compare]').forEach(btn => btn.addEventListener('click', () => toggleCompare(Number(btn.dataset.compare))));
+  scope.querySelectorAll('[data-compare]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); toggleCompare(Number(btn.dataset.compare)); }));
+  scope.querySelectorAll('.card-actions a').forEach(link => link.addEventListener('click', (e) => e.stopPropagation()));
 }
 
 function renderCards(list){
